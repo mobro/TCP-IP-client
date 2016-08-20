@@ -19,6 +19,7 @@
 /* ***************** CLIENT CODE ****************/
 
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
@@ -48,11 +49,15 @@ int main()
   addr_size = sizeof serverAddr;
   connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
 
-  /* ---- Read the message from the server into the buffer ----*/
-  recv(clientSocket, buffer, 1024, 0);
+  while(1)
+  {
+    /* ---- Read the message from the server into the buffer ----*/
+    recv(clientSocket, buffer, 1024, 0);
 
-  /* ---- Print the received message ----*/
-  printf("Data received: %s",buffer);   
+    /* ---- Print the received message ----*/
+    printf("Data received: %s",buffer);   
+    sleep(2);
+  }
 
   return 0;
 
